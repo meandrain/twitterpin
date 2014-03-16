@@ -208,18 +208,24 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
     // we received data from the twitter stream endpoint, each tweet is separanted by a a carriage return and a line feed characters, test for both because \n can be present inside the tweet json
+
+    // do work in separate thread
+    dispatch_async(dispatch_get_global_queue(
+                                             DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
-    // convert data to ascii encoding
-    NSString *dataString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-
-    // separate it into tweets
-    NSArray* components = [dataString componentsSeparatedByString: @"\r\n"];
-
-    // the last component is not a valid tweet, iterate through the container and call the utility function on each
-    for (int i=0; i<components.count - 1; i++)
-    {
-        [self processTweet: [components objectAtIndex: i] ];
-    }
+        // convert data to ascii encoding
+        NSString *dataString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+        
+        // separate it into tweets
+        NSArray* components = [dataString componentsSeparatedByString: @"\r\n"];
+        
+        // the last component is not a valid tweet, iterate through the container and call the utility function on each
+        for (int i=0; i<components.count - 1; i++)
+        {
+            [self processTweet: [components objectAtIndex: i] ];
+        }
+        
+    });
 }
 
 // alert view function to select between multiple twitter accounts
@@ -243,7 +249,7 @@
         [self startStreaming];
     }
 }
-    
+
 // utility error function
 - (void) showTwitterError: (NSString*) message
 {

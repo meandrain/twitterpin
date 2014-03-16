@@ -12,17 +12,6 @@
 #import "Constants.h"
 #import "TweetLocation.h"
 
-@interface DeletableMapAnnotation : MKPointAnnotation {
-}
-
-@property(nonatomic, strong) NSDate* created_at;
-
-@end
-
-@implementation DeletableMapAnnotation
-
-@end
-
 @interface ViewController ()
 {
     Reachability* hostReachibility;
@@ -57,20 +46,14 @@
     // stop the timer if it's running
     [self stopTimer];
     
-    // NSLog(@"%s", __PRETTY_FUNCTION__);
-    
     self.cleanupTimer = [NSTimer scheduledTimerWithTimeInterval: LIFE_TIME_SECONDS
                                              target: self
                                            selector:@selector(tweetCleanup:)
                                            userInfo: nil repeats:YES];
-    
-    // NSLog(@"timer=%d", (int)self.cleanupTimer);
 }
 
 - (void) stopTimer
 {
-    // NSLog(@"stopTimer=%d", (int)self.cleanupTimer);
-    
     [self.cleanupTimer invalidate];
     self.cleanupTimer = nil;
 }
@@ -115,12 +98,9 @@
 
 - (void) addPinAtLocation: (CGPoint) point
 {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-    
-    DeletableMapAnnotation *toAdd = [[DeletableMapAnnotation alloc]init];
+    MKPointAnnotation *toAdd = [[MKPointAnnotation alloc]init];
     CLLocationCoordinate2D locgeo = CLLocationCoordinate2DMake(point.x, point.y);
     toAdd.coordinate = locgeo;
-    toAdd.created_at = [NSDate date];
     
     [self.mapView addAnnotation:toAdd];
 }
@@ -161,28 +141,6 @@
         
         [self addPinAtLocation: CGPointMake([tweetloc.latitude doubleValue], [tweetloc.longitude doubleValue])];
     }
-    
-    /*
-    NSArray* annotations = [self.mapView annotations];
-    NSDate* cleanupDate = [[NSDate date] dateByAddingTimeInterval: -LIFE_TIME_SECONDS];
-
-    NSMutableArray* annotationsToRemove = [[NSMutableArray alloc] init];
-    
-    for (int i=0; i<annotations.count; i++)
-    {
-        DeletableMapAnnotation* deletableAnnotation = (DeletableMapAnnotation*)[annotations objectAtIndex: i];
-        
-        if ([deletableAnnotation.created_at compare: cleanupDate] == NSOrderedDescending)
-        {
-            // this annotation must be deleted
-            [annotationsToRemove addObject: deletableAnnotation];
-        }
-    }
-    
-    [self.mapView removeAnnotations: annotationsToRemove];
-    
-    NSLog(@"Removed %d annotations annotations.count=%d", annotationsToRemove.count, annotations.count);
-    */
 }
 
 - (void) dealloc

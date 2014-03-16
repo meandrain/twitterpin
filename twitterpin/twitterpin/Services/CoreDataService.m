@@ -12,7 +12,7 @@
 @implementation CoreDataService
 {
 }
-    
+
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
@@ -28,8 +28,15 @@
 
 - (void)saveContext
 {
+    // don't save objects on disk this is no neededed, on the occasion that this will
+    // be needed just decomment the above code
+    
+    /*
     NSError *error = nil;
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    
+    [managedObjectContext lock];
+    
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
@@ -38,6 +45,9 @@
             abort();
         }
     }
+    
+    [managedObjectContext unlock];
+    */
 }
     
 - (void) insertTweetLocation: (CGPoint) location
