@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 /*
- Service
+ Singleton service that allows interacting with a core data store allowing insert/delete/query of tweet locations
 */
 
 @interface CoreDataService : NSObject

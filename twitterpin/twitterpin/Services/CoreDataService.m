@@ -42,17 +42,20 @@
     
 - (void) insertTweetLocation: (CGPoint) location
 {
+    // insert a new tweet location object and populate it with a locatino and current date
     TweetLocation* newTweetLocation = [NSEntityDescription insertNewObjectForEntityForName:@"TweetLocation" inManagedObjectContext:self.managedObjectContext];
     
     newTweetLocation.latitude = [NSNumber numberWithDouble: location.x];
     newTweetLocation.longitude = [NSNumber numberWithDouble: location.y];
     newTweetLocation.created_at = [NSDate date];
     
+    // save changes to disk
     [self saveContext];
 }
 
 - (NSArray*) getTweetLocations
 {
+    // grab all tweet location objects from the store
     NSManagedObjectContext *context = self.managedObjectContext;
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
@@ -72,6 +75,7 @@
 
 - (void) deleteTweetsOlderThan: (float) lifetime
 {
+    // perform a fetch request and retrieve all tweets than need to be erased, use a date comparison predicate
     NSManagedObjectContext *context = self.managedObjectContext;
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
@@ -84,14 +88,15 @@
     NSError *error = nil;
     NSArray *results = [context executeFetchRequest:request error: &error];
     
+    // iterate through each of the and delete
     for (int i=0; i<results.count; i++)
     {
         NSManagedObject* obj = [results objectAtIndex: i];
         [self.managedObjectContext deleteObject: obj];
     }
     
+    // persist modifications
     [self saveContext];
-
 }
 
 #pragma mark - Core Data stack
