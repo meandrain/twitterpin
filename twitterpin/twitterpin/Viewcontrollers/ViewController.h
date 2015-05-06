@@ -2,9 +2,6 @@
 //  ViewController.h
 //  twitterpin
 //
-//  Created by Adrian Manolache on 14/03/14.
-//  Copyright (c) 2014 Adrian Manolache. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
@@ -18,6 +15,6 @@
     TWStreamService* twStreamService;
 }
 
-@property (strong, nonatomic) IBOutlet MKMapView *mapView;
+@property (nonatomic, weak) IBOutlet MKMapView *mapView;
 
 @end

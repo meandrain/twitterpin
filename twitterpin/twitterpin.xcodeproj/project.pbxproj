@@ -16,7 +16,6 @@
 		3A2CA4E218D4AA12009E9694 /* TWStreamService.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2CA4CE18D4AA12009E9694 /* TWStreamService.m */; };
 		3A2CA4E318D4AA12009E9694 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A2CA4D018D4AA12009E9694 /* InfoPlist.strings */; };
 		3A2CA4E418D4AA12009E9694 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2CA4D218D4AA12009E9694 /* main.m */; };
-		3A2CA4E518D4AA12009E9694 /* twitterpin-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A2CA4D318D4AA12009E9694 /* twitterpin-Info.plist */; };
 		3A2CA4E618D4AA12009E9694 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A2CA4D618D4AA12009E9694 /* Main_iPad.storyboard */; };
 		3A2CA4E718D4AA12009E9694 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A2CA4D818D4AA12009E9694 /* Main_iPhone.storyboard */; };
 		3A2CA4E818D4AA12009E9694 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2CA4DB18D4AA12009E9694 /* ViewController.m */; };
@@ -240,7 +239,7 @@
 		3AF00A5518D36DB8001D1CC8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Adrian Manolache";
 			};
 			buildConfigurationList = 3AF00A5818D36DB8001D1CC8 /* Build configuration list for PBXProject "twitterpin" */;
@@ -266,7 +265,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A2CA4E518D4AA12009E9694 /* twitterpin-Info.plist in Resources */,
 				3A2CA4E618D4AA12009E9694 /* Main_iPad.storyboard in Resources */,
 				3A2CA4E718D4AA12009E9694 /* Main_iPhone.storyboard in Resources */,
 				3A2CA4DD18D4AA12009E9694 /* Images.xcassets in Resources */,
@@ -354,7 +352,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -387,7 +385,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

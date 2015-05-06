@@ -2,9 +2,6 @@
 //  ViewController.m
 //  twitterpin
 //
-//  Created by Adrian Manolache on 14/03/14.
-//  Copyright (c) 2014 Adrian Manolache. All rights reserved.
-//
 
 #import "ViewController.h"
 #import "AppDelegate.h"
@@ -63,23 +60,17 @@
  */
 - (void) reachabilityChanged:(NSNotification *)note
 {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-    
 	Reachability* curReach = [note object];
 	NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
     NetworkStatus netStatus = [curReach currentReachabilityStatus];
 
     if (netStatus == NotReachable)
-    {   
-        NSLog(@"Network is offline");
-        
+    {
         // stop timer
         [self stopTimer];
     }
     else
     {
-        NSLog(@"Network is back online");
-        
         // network is back online, reset everything
         [self tweetCleanup: nil];
         [self startStreamService];
@@ -98,11 +89,16 @@
 
 - (void) addPinAtLocation: (CGPoint) point
 {
-    MKPointAnnotation *toAdd = [[MKPointAnnotation alloc]init];
-    CLLocationCoordinate2D locgeo = CLLocationCoordinate2DMake(point.x, point.y);
-    toAdd.coordinate = locgeo;
-    
-    [self.mapView addAnnotation:toAdd];
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        __strong typeof(self) strongSelf = weakSelf;
+   
+        MKPointAnnotation *toAdd = [[MKPointAnnotation alloc]init];
+        CLLocationCoordinate2D locgeo = CLLocationCoordinate2DMake(point.x, point.y);
+        toAdd.coordinate = locgeo;
+        
+        [strongSelf.mapView addAnnotation:toAdd];
+    });
 }
 
 - (void) tweetLocationFound:(id) pointDict
@@ -120,8 +116,6 @@
 
 - (void) tweetCleanup: (NSTimer*) timer
 {
-    NSLog(@"%s %0.2f",__PRETTY_FUNCTION__, CACurrentMediaTime());
-
     [[CoreDataService sharedCoreDataService] deleteTweetsOlderThan: LIFE_TIME_SECONDS];
     
     [self updateUIMap];
@@ -129,18 +123,21 @@
 
 - (void)updateUIMap
 {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-    
-    [self.mapView removeAnnotations: self.mapView.annotations];
-    
     NSArray* arr = [[CoreDataService sharedCoreDataService] getTweetLocations];
     
-    for (int i=0; i<[arr count]; i++)
-    {
-        TweetLocation* tweetloc = [arr objectAtIndex: i];
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        __strong typeof(self) strongSelf = weakSelf;
+
+        [strongSelf.mapView removeAnnotations: strongSelf.mapView.annotations];
         
-        [self addPinAtLocation: CGPointMake([tweetloc.latitude doubleValue], [tweetloc.longitude doubleValue])];
-    }
+        for (int i=0; i<[arr count]; i++)
+        {
+            TweetLocation* tweetloc = [arr objectAtIndex: i];
+            
+            [strongSelf addPinAtLocation: CGPointMake([tweetloc.latitude doubleValue], [tweetloc.longitude doubleValue])];
+        }
+    });
 }
 
 - (void) dealloc

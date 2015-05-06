@@ -2,9 +2,6 @@
 //  CoreDataService.m
 //  twitterpin
 //
-//  Created by Adrian Manolache on 15/03/14.
-//  Copyright (c) 2014 Adrian Manolache. All rights reserved.
-//
 
 #import "CoreDataService.h"
 #import "TweetLocation.h"
@@ -19,10 +16,11 @@
 
 + (id) sharedCoreDataService {
     static CoreDataService *coreDataService = nil;
-    @synchronized(self) {
-        if (coreDataService == nil)
-            coreDataService = [[self alloc] init];
-    }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        coreDataService = [[self alloc] init];
+    });
+                  
     return coreDataService;
 }
 

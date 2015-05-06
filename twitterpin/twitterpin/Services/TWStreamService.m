@@ -2,9 +2,6 @@
 //  TWStreamService.m
 //  twitterpin
 //
-//  Created by Adrian Manolache on 15/03/14.
-//  Copyright (c) 2014 Adrian Manolache. All rights reserved.
-//
 
 #import "TWStreamService.h"
 #import "AppDelegate.h"
@@ -163,7 +160,7 @@
     
     // set the account we just grabbed above
     [request setAccount:self.account];
-    
+
     // dispatch the connection on the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
         NSURLConnection *aConn = [NSURLConnection connectionWithRequest:[request preparedURLRequest] delegate:self];
@@ -208,7 +205,7 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
     // we received data from the twitter stream endpoint, each tweet is separanted by a a carriage return and a line feed characters, test for both because \n can be present inside the tweet json
-
+   
     // do work in separate thread
     dispatch_async(dispatch_get_global_queue(
                                              DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
